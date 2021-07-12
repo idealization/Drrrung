@@ -3,4 +3,5 @@
     <string name="wake_upMSG1">Wake Up !</string>
     <string name="wakeupMSG2">오늘 잠은 어떠셨나요?</string>
     <string name="emptystar">emptyStar</string>
+    <string name="save">save</string>
 </resources>

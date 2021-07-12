@@ -75,11 +75,11 @@
             android:layout_marginTop="30dp"
             android:backgroundTint="#BDC3E6"
             android:backgroundTintMode="src_in"
-            android:contentDescription="save"
+            android:contentDescription="@string/save"
             android:fontFamily="@font/baloo_da"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="save"
+            android:text="@string/save"
             android:textColor="#1B1A1A"
             android:textSize="14sp" />
 
