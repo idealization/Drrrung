@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".RatingActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        android:paddingTop="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:viewBindingIgnore="true">
+
+        <TextView
+            android:id="@+id/wakeup1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_da"
+            android:gravity="center"
+            android:text="@string/wake_upMSG1"
+            android:textAllCaps="false"
+            android:textColor="#E91E63"
+            android:textSize="70sp" />
+
+        <TextView
+            android:id="@+id/wakeupMSG2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="#FFFFFF"
+            android:fontFamily="monospace"
+            android:text="@string/wakeupMSG2"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@android:style/Widget.DeviceDefault.Light.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_gravity="center"
+            android:indeterminate="false"
+            android:isIndicator="false"
+            android:max="5"
+            android:numStars="5"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:progressDrawable="@drawable/rating"
+            android:rating="0"
+            android:scaleType="fitCenter"
+            android:stepSize="0.5" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="76dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#BDC3E6"
+            android:backgroundTintMode="src_in"
+            android:contentDescription="@string/save"
+            android:fontFamily="@font/baloo_da"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="@string/save"
+            android:textColor="#1B1A1A"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
