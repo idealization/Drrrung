@@ -36,6 +36,18 @@
             android:textSize="48sp"
             android:textStyle="bold" />
 
+        <TextClock
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/aldrich"
+            android:format12Hour="hh:mm"
+            android:format24Hour="HH:mm"
+            android:textAlignment="center"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/button"
             android:layout_width="match_parent"
@@ -44,5 +56,6 @@
             android:backgroundTint="#5A68B8"
             android:text="@string/stop"
             android:textSize="24sp" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
