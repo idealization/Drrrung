@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cau.dururung.dururung" >
+    package="cau.dururung.dururung">
 
     <application
         android:allowBackup="true"
@@ -9,9 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Dururung" >
-        <activity android:name=".MorningcallActivity" android:exported="true">
-
-        </activity>
         <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MorningcallActivity" android:exported="true"></activity>
+        <activity android:name=".WhiteNoiseActivity" android:exported="true"></activity>
         <activity android:name=".RatingActivity" android:exported="true"></activity>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
