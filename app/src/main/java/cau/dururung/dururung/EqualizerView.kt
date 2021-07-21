@@ -2,60 +2,46 @@ package cau.dururung.dururung
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
+import android.graphics.Path
+import android.graphics.PointF
 import android.util.AttributeSet
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 
-/**
- * TODO: document your custom view class.
- */
+
 class EqualizerView : View {
+    val paint = Paint()
+    var leftY: Float = -1F
+    var rightY: Float = -1F
+    var midPoint: PointF = PointF(0F, 0F)
 
-    private var _exampleString: String? = null // TODO: use a default from R.string...
-    private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
-    private var _exampleDimension: Float = 0f // TODO: use a default from R.dimen...
 
-    private lateinit var textPaint: TextPaint
-    private var textWidth: Float = 0f
-    private var textHeight: Float = 0f
 
-    /**
-     * The text to draw
-     */
-    var exampleString: String?
-        get() = _exampleString
-        set(value) {
-            _exampleString = value
-            invalidateTextPaintAndMeasurements()
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        Log.d("WNoise", "$event")
+        if (event == null) return super.onTouchEvent(event)
+
+        val tenth = width / 10
+        val x = event.x
+        val y = event.y
+
+        if (x <= tenth || x >= tenth * 9) { // side
+            if (x <= width/2) { // left side
+                leftY = y
+            } else {
+                rightY = y
+            }
+        } else {
+            midPoint.set(x, y)
         }
 
-    /**
-     * The font color
-     */
-    var exampleColor: Int
-        get() = _exampleColor
-        set(value) {
-            _exampleColor = value
-            invalidateTextPaintAndMeasurements()
-        }
+        invalidate()
+        performClick()
+        return super.onTouchEvent(event)
+    }
 
-    /**
-     * In the example view, this dimension is the font size.
-     */
-    var exampleDimension: Float
-        get() = _exampleDimension
-        set(value) {
-            _exampleDimension = value
-            invalidateTextPaintAndMeasurements()
-        }
-
-    /**
-     * In the example view, this drawable is drawn above the text.
-     */
-    var exampleDrawable: Drawable? = null
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -75,82 +61,31 @@ class EqualizerView : View {
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
+        isClickable = true
         val a = context.obtainStyledAttributes(
             attrs, R.styleable.EqualizerView, defStyle, 0
         )
-
-        _exampleString = a.getString(
-            R.styleable.EqualizerView_exampleString
-        )
-        _exampleColor = a.getColor(
-            R.styleable.EqualizerView_exampleColor,
-            exampleColor
-        )
-        // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
-        // values that should fall on pixel boundaries.
-        _exampleDimension = a.getDimension(
-            R.styleable.EqualizerView_exampleDimension,
-            exampleDimension
-        )
-
-        if (a.hasValue(R.styleable.EqualizerView_exampleDrawable)) {
-            exampleDrawable = a.getDrawable(
-                R.styleable.EqualizerView_exampleDrawable
-            )
-            exampleDrawable?.callback = this
-        }
-
         a.recycle()
-
-        // Set up a default TextPaint object
-        textPaint = TextPaint().apply {
-            flags = Paint.ANTI_ALIAS_FLAG
-            textAlign = Paint.Align.LEFT
-        }
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements()
-    }
-
-    private fun invalidateTextPaintAndMeasurements() {
-        textPaint.let {
-            it.textSize = exampleDimension
-            it.color = exampleColor
-            textWidth = it.measureText(exampleString)
-            textHeight = it.fontMetrics.bottom
-        }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        // TODO: consider storing these as member variables to reduce
-        // allocations per draw cycle.
-        val paddingLeft = paddingLeft
-        val paddingTop = paddingTop
-        val paddingRight = paddingRight
-        val paddingBottom = paddingBottom
-
-        val contentWidth = width - paddingLeft - paddingRight
-        val contentHeight = height - paddingTop - paddingBottom
-
-        exampleString?.let {
-            // Draw the text.
-            canvas.drawText(
-                it,
-                paddingLeft + (contentWidth - textWidth) / 2,
-                paddingTop + (contentHeight + textHeight) / 2,
-                textPaint
-            )
+        paint.style = Paint.Style.FILL
+        if (leftY == -1F || rightY == -1F) {
+            leftY = (height/2).toFloat()
+            rightY = (height/2).toFloat()
+            midPoint.set((width/2).toFloat(), (height/2).toFloat())
         }
 
-        // Draw the example drawable on top of the text.
-        exampleDrawable?.let {
-            it.setBounds(
-                paddingLeft, paddingTop,
-                paddingLeft + contentWidth, paddingTop + contentHeight
-            )
-            it.draw(canvas)
+        val bezier = Path()
+        bezier.moveTo(0F, leftY)
+        bezier.quadTo(2*midPoint.x - width/2, 2*midPoint.y - leftY/2 - rightY/2,
+            width.toFloat(), rightY)
+        bezier.lineTo(width.toFloat(), height.toFloat())
+        bezier.lineTo(0F, height.toFloat())
+
+        canvas.apply {
+            drawPath(bezier, paint)
         }
     }
 }
