@@ -16,7 +16,8 @@ class EqualizerView : View {
     var leftY: Float = -1F
     var rightY: Float = -1F
     var midPoint: PointF = PointF(0F, 0F)
-
+    var numBands: Int = 5
+    val bezier = Path()
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -68,6 +69,9 @@ class EqualizerView : View {
         a.recycle()
     }
 
+//    fun getEQLevel(band: Int): Float{
+//    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         paint.style = Paint.Style.FILL
@@ -77,15 +81,20 @@ class EqualizerView : View {
             midPoint.set((width/2).toFloat(), (height/2).toFloat())
         }
 
-        val bezier = Path()
+        bezier.reset()
         bezier.moveTo(0F, leftY)
         bezier.quadTo(2*midPoint.x - width/2, 2*midPoint.y - leftY/2 - rightY/2,
             width.toFloat(), rightY)
         bezier.lineTo(width.toFloat(), height.toFloat())
         bezier.lineTo(0F, height.toFloat())
-
         canvas.apply {
             drawPath(bezier, paint)
+        }
+
+        for (i in 1 until numBands){
+            canvas.drawLine(
+                (i * width / numBands).toFloat(), 0F,
+                (i * width / numBands).toFloat(), height.toFloat(), paint)
         }
     }
 }
