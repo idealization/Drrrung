@@ -4,7 +4,10 @@ import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
+import android.media.AudioAttributes
 import android.media.AudioManager
+import android.media.MediaPlayer
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -35,6 +38,8 @@ class MorningcallActivity : AppCompatActivity() {
     var hour: Int = 0
     var min: Int = 0
     lateinit var audioManager: AudioManager
+    lateinit var selectedSound: MediaPlayer
+    lateinit var selectedSoundName: String
     var volume: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,18 +57,27 @@ class MorningcallActivity : AppCompatActivity() {
             min = minute
         }
 
-        var selectedSound: String? = null
+        val musics = arrayOf(
+            MediaPlayer.create(this, R.raw.cosmic),
+            MediaPlayer.create(this, R.raw.crystals),
+            MediaPlayer.create(this, R.raw.hillside),
+            MediaPlayer.create(this, R.raw.illuminate)
+        )
+        selectedSound = musics[0]
         binding.btnRadioAlertDialog.setOnClickListener {
-            val items = arrayOf("Apple", "Orange", "Mango", "Lemon")
-            var selectedItem: String? = null
+            val items = arrayOf("Cosmic", "Crystals", "Hillside", "Illuminate")
+            lateinit var selectedItem: String
             val builder = AlertDialog.Builder(this)
                 .setTitle("Select Item")
                 .setSingleChoiceItems(items, -1) { dialog, which ->
                     selectedItem = items[which]
+                    musics[items.indexOf(selectedItem)].start()
                 }
                 .setPositiveButton("OK") { dialog, which ->
-                    toast("${selectedItem.toString()} is Selected")
-                    selectedSound = selectedItem
+                    toast("$selectedItem is Selected")
+                    selectedSound = musics[items.indexOf(selectedItem)]
+                    selectedSoundName = selectedItem
+                    musics[items.indexOf(selectedItem)].pause()
                 }
                 .show()
         }
@@ -73,7 +87,7 @@ class MorningcallActivity : AppCompatActivity() {
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
 
         binding.okBtn.setOnClickListener {
-            appSpecificExternalDir.writeText("$hour $min $selectedSound $volume")
+            appSpecificExternalDir.writeText("$hour $min $selectedSoundName $volume")
         }
 
         binding.cancleBtn.setOnClickListener {
@@ -88,9 +102,22 @@ class MorningcallActivity : AppCompatActivity() {
     inner class SeekBarListener : SeekBar.OnSeekBarChangeListener {
 
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            Log.d(TAG, String.format("onProgressChanged 값 변경 중 : progress [%d] fromUser [%b]", progress, fromUser))
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, AudioManager.FLAG_SHOW_UI)
+            Log.d(
+                TAG,
+                String.format(
+                    "onProgressChanged 값 변경 중 : progress [%d] fromUser [%b]",
+                    progress,
+                    fromUser
+                )
+            )
+            audioManager.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                progress,
+                AudioManager.FLAG_SHOW_UI
+            )
             volume = progress
+            selectedSound.isLooping
+            selectedSound.start()
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
