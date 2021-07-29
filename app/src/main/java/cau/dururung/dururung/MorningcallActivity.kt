@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -42,9 +43,13 @@ class MorningcallActivity : AppCompatActivity() {
     lateinit var selectedSoundName: String
     var volume: Int = 0
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_morningcall)
+
 
         val appSpecificExternalDir =
             File(applicationContext.getExternalFilesDir(null), "alarm_info")
@@ -87,11 +92,16 @@ class MorningcallActivity : AppCompatActivity() {
         binding.seekBar.setOnSeekBarChangeListener(seekBarListener)
 
         binding.okBtn.setOnClickListener {
+            // 보림
+            var intent = Intent(this@MorningcallActivity, PassActivity::class.java)
             appSpecificExternalDir.writeText("$hour $min $selectedSoundName $volume")
+            startActivity(intent)
         }
 
         binding.cancleBtn.setOnClickListener {
-
+            // 보림
+            var intent = Intent(this@MorningcallActivity, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 
