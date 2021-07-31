@@ -1,9 +1,13 @@
 package cau.dururung.dururung
 
+import android.app.TimePickerDialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -18,6 +22,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -26,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sleepDao: SleepDataDao
     private lateinit var labels: Array<String>
+
+    var hour: Int = 0
+    var min: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,16 +50,16 @@ class MainActivity : AppCompatActivity() {
         var i = 0f
         labels = arrayOf("0","0","0","0","0","0","0")
         for (data in sleepdata) {
-            var sleepdate_tmp = data.sleep_date.split('-')
+            val sleepdate_tmp = data.sleep_date.split('-')
             labels.set(i.toInt(),sleepdate_tmp[1]+"/"+sleepdate_tmp[2])
-            var start_tmp = data.start_time.split('-')
-            var start_time = start_tmp[0].toFloat()
-            var start_min = start_tmp[1].toFloat()
-            var new_smin = start_min * 10 / 6
-            var end_tmp = data.end_time.split('-')
-            var end_time = end_tmp[0].toFloat()
-            var end_min = end_tmp[1].toFloat()
-            var new_emin = end_min * 10 / 6
+            val start_tmp = data.start_time.split('-')
+            val start_time = start_tmp[0].toFloat()
+            val start_min = start_tmp[1].toFloat()
+            val new_smin = start_min * 10 / 6
+            val end_tmp = data.end_time.split('-')
+            val end_time = end_tmp[0].toFloat()
+            val end_min = end_tmp[1].toFloat()
+            val new_emin = end_min * 10 / 6
             var new_stime = start_time - 12
             if (new_stime < 0) {
                 new_stime += 24
@@ -59,8 +67,6 @@ class MainActivity : AppCompatActivity() {
             entries.add(CandleEntry(i,0f,0f,end_time + new_emin/100,new_stime + new_smin/100))
             i += 1
         }
-
-
 
         val dataSet = CandleDataSet(entries, "Sleep Data").apply {
             // 심지 부분
@@ -107,6 +113,24 @@ class MainActivity : AppCompatActivity() {
             }
             invalidate()
         }
+
+        binding.btnSelectTime.setOnClickListener {
+            val cal = Calendar.getInstance()
+
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+
+                binding.btnSelectTime.text = SimpleDateFormat("HH:mm").format(cal.time)
+            }
+
+            TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
+        }
+
+        binding.switchWakeTime.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.btnSelectTime.isEnabled = isChecked
+        }
+
     }
 
     private fun accessDatabase() {
