@@ -96,12 +96,14 @@ class MorningcallActivity : AppCompatActivity() {
             var intent = Intent(this@MorningcallActivity, PassActivity::class.java)
             appSpecificExternalDir.writeText("$hour $min $selectedSoundName $volume")
             startActivity(intent)
+            finish()
         }
 
         binding.cancleBtn.setOnClickListener {
             // 보림
             var intent = Intent(this@MorningcallActivity, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 
