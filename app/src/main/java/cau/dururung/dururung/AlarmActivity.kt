@@ -74,22 +74,21 @@ class AlarmActivity : AppCompatActivity() {
     } catch (e:Exception){
         e.printStackTrace()
     }
-        val intent = Intent(this@AlarmActivity, PassActivity::class.java)
+        val resultIntent = Intent(this,PassActivity::class.java)
         binding.stopBtn.setOnClickListener {
             //r2.stop()
             player.stop()
             vib.cancel()
-
-            intent.putExtra("isSnooze","false")
-            setResult(RESULT_OK, intent)
+            resultIntent.putExtra("isSnooze","false")
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
         binding.snooze.setOnClickListener {
             //r2.stop()
             player.stop()
             vib.cancel()
-            intent.putExtra("isSnooze","true")
-            setResult(RESULT_OK, intent)
+            resultIntent.putExtra("isSnooze","true")
+            setResult(RESULT_OK, resultIntent)
             finish()
         }
 
