@@ -9,6 +9,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 class EqualizerView : View {
@@ -17,13 +19,12 @@ class EqualizerView : View {
     var rightY: Float = -1F
     var midPoint: PointF = PointF(0F, 0F)
     var numBands: Int = 5
-    val bezier = Path()
+    private val bezier = Path()
 
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         Log.d("WNoise", "$event")
         if (event == null) return super.onTouchEvent(event)
-
         val tenth = width / 10
         val x = event.x
         val y = event.y
@@ -69,8 +70,24 @@ class EqualizerView : View {
         a.recycle()
     }
 
-//    fun getEQLevel(band: Int): Float{
-//    }
+    fun getEQLevel(band: Int): Float {
+        val x = (band * 2 + 1) * width / (numBands * 2)
+
+        val ax = 0
+        val ay = leftY
+        val bx = midPoint.x * 2 - width / 2
+        val by = midPoint.y * 2 - leftY / 2 - rightY / 2
+        val cx = width
+        val cy = rightY
+
+        val t1 =
+            (ax - bx + sqrt(bx.pow(2) - 2 * x * bx - ax * cx + ax * x + cx * x)) / (ax - 2 * bx + cx)
+        val t2 =
+            -(ax - bx + sqrt(bx.pow(2) - 2 * x * bx - ax * cx + ax * x + cx * x)) / (ax - 2 * bx + cx)
+        val t = if (t1 in 0.0..1.0) t1 else t2
+
+        return 1 - ((1 - t).pow(2)*ay + 2*t*(1 - t)*by + t.pow(2)*cy) / height
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
