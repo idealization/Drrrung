@@ -1,16 +1,12 @@
 package cau.dururung.dururung
 
 import android.content.Intent
-import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.Ringtone
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityAlarmBinding
-import java.lang.reflect.Array
-import java.util.*
+
 
 
 class AlarmActivity : AppCompatActivity() {
@@ -49,26 +45,6 @@ class AlarmActivity : AppCompatActivity() {
                 //alarm = Uri.parse("android.resource://"+packageName+"/"+R.raw.hillside)
             }
         }
-        //r2 = RingtoneManager.getRingtone(this, alarm)
-
-        /*
-        val mMediaPlayer = MediaPlayer()
-        try {
-            mMediaPlayer.setDataSource(this, alarm)
-            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM)
-            mMediaPlayer.isLooping = true
-            mMediaPlayer.prepare()
-            mMediaPlayer.start()
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        } catch (e: SecurityException) {
-            e.printStackTrace()
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-        }
-
-        r2.play()
-        */
         player.isLooping = true
         player.start()
     } catch (e:Exception){
@@ -78,6 +54,7 @@ class AlarmActivity : AppCompatActivity() {
         binding.stopBtn.setOnClickListener {
             //r2.stop()
             player.stop()
+            player.release()
             vib.cancel()
             resultIntent.putExtra("isSnooze","false")
             setResult(RESULT_OK, resultIntent)
@@ -91,9 +68,5 @@ class AlarmActivity : AppCompatActivity() {
             setResult(RESULT_OK, resultIntent)
             finish()
         }
-
-
     }
-
-
 }
