@@ -1,10 +1,17 @@
 package cau.dururung.dururung
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import cau.dururung.dururung.db.SleepData
+import cau.dururung.dururung.db.SleepDataDao
+import cau.dururung.dururung.db.SleepDatabase
 import java.io.File
+import java.time.LocalDate
 import java.util.*
 
 class PassActivity : AppCompatActivity() {
@@ -15,6 +22,7 @@ class PassActivity : AppCompatActivity() {
     private lateinit var selectedSoundName : String
     private var volume = 10
     private var snoozeCnt = 0
+    private lateinit var sleepDao: SleepDataDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +54,7 @@ class PassActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(resultCode == RESULT_OK){
@@ -53,7 +62,22 @@ class PassActivity : AppCompatActivity() {
                 3000 -> {
                     val isSnooze = data!!.getStringExtra("isSnooze").toBoolean()
                     if (!isSnooze){
-                        //데이터저장
+                        // 데이터저장
+                        val today = LocalDate.now().toString()
+                        var hourStr = hour.toString()
+                        var minStr = min.toString()
+                        if (hour < 10){ hourStr = "0" + hourStr}
+                        if (min < 10){ minStr = "0" + minStr}
+                        accessDatabase()
+                        val endTime = hourStr + '-' + minStr
+                        Log.d("time",endTime)
+                        var entity = SleepData(
+                            sleep_date = today,
+                            start_time = "01-21",
+                            wakeUp_date = today,
+                            end_time = endTime
+                        )
+                        sleepDao.insert(entity)
                         timer.cancel()
                         finish()
                     }
@@ -82,5 +106,9 @@ class PassActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    private fun accessDatabase() {
+        val db = SleepDatabase.getInstance(this)!!
+        sleepDao = db.sleepDao()
     }
 }
