@@ -44,14 +44,14 @@ class MainActivity : AppCompatActivity() {
         for (data in sleepdata) {
             var sleepdate_tmp = data.sleep_date.split('-')
             labels.set(i.toInt(),sleepdate_tmp[1]+"/"+sleepdate_tmp[2])
-            var start_tmp = data.start_time.split('-')
-            var start_time = start_tmp[0].toFloat()
-            var start_min = start_tmp[1].toFloat()
-            var new_smin = start_min * 10 / 6
-            var end_tmp = data.end_time.split('-')
-            var end_time = end_tmp[0].toFloat()
-            var end_min = end_tmp[1].toFloat()
-            var new_emin = end_min * 10 / 6
+            val start_tmp = data.start_time.split('-')
+            val start_time = start_tmp[0].toFloat()
+            val start_min = start_tmp[1].toFloat()
+            val new_smin = start_min * 10 / 6
+            val end_tmp = data.end_time.split('-')
+            val end_time = end_tmp[0].toFloat()
+            val end_min = end_tmp[1].toFloat()
+            val new_emin = end_min * 10 / 6
             var new_stime = start_time - 12
             if (new_stime < 0) {
                 new_stime += 24
