@@ -5,7 +5,6 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import cau.dururung.dururung.db.SleepData
 import cau.dururung.dururung.db.SleepDataDao
@@ -83,7 +82,7 @@ class PassActivity : AppCompatActivity() {
                     }
                     else if(isSnooze){
                         snoozeCnt += 1
-                        min += 1
+                        min += 5
                         if (min >= 60){
                             hour = (hour + 1) % 24
                             min -= 60
