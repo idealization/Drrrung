@@ -9,6 +9,7 @@ import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
@@ -17,10 +18,13 @@ import android.widget.Button
 import android.widget.Toast
 import android.widget.SeekBar
 import android.widget.TimePicker
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import cau.dururung.dururung.databinding.ActivityMorningcallBinding
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MorningcallActivity : AppCompatActivity() {
@@ -46,6 +50,7 @@ class MorningcallActivity : AppCompatActivity() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_morningcall)
@@ -95,6 +100,13 @@ class MorningcallActivity : AppCompatActivity() {
             // 보림
             var intent = Intent(this@MorningcallActivity, PassActivity::class.java)
             appSpecificExternalDir.writeText("$hour $min $selectedSoundName $volume")
+            val now = LocalDateTime.now()
+            val date_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val time_formatter = DateTimeFormatter.ofPattern("HH:mm")
+            val date_formatted = now.format(date_formatter)
+            val time_formatted = now.format(time_formatter)
+            intent.putExtra("sleepDate", date_formatted)
+            intent.putExtra("sleepTime", time_formatted)
             startActivity(intent)
             finish()
         }

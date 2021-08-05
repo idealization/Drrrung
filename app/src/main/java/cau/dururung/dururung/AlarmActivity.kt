@@ -30,19 +30,15 @@ class AlarmActivity : AppCompatActivity() {
         val ringData = intent.getStringExtra("ring")
         val alarmName = ringData?.get(0)
         player = MediaPlayer.create(this, R.raw.illuminate)
-        //var alarm: Uri = Uri.parse("android.resource://"+packageName+"/"+R.raw.illuminate)
         if (alarmName != null) {
             if (alarmName.equals("cosmic")){
                 player = MediaPlayer.create(this, R.raw.cosmic)
-                //alarm = Uri.parse("android.resource://"+packageName+"/"+R.raw.cosmic)
             }
             else if (alarmName.equals("crystals")){
                 player = MediaPlayer.create(this, R.raw.crystals)
-                //alarm = Uri.parse("android.resource://"+packageName+"/"+R.raw.crystals)
             }
             else if (alarmName.equals("hillside")){
                 player = MediaPlayer.create(this, R.raw.hillside)
-                //alarm = Uri.parse("android.resource://"+packageName+"/"+R.raw.hillside)
             }
         }
         player.isLooping = true

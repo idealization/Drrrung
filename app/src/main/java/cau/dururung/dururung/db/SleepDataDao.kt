@@ -14,7 +14,7 @@ interface SleepDataDao {
     @Delete
     fun delete(sleepData: SleepData)
 
-    @Query("SELECT * FROM SleepData LIMIT 7")
+    @Query("SELECT * FROM SleepData ORDER BY id DESC LIMIT 7")
     fun getWeek(): List<SleepData>
 
 }

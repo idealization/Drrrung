@@ -10,7 +10,8 @@ data class SleepData(
     var sleep_date : String,
     var wakeUp_date : String,
     var start_time: String,
-    var end_time: String
+    var end_time: String,
+    var rating: Float?
 ){
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 }
