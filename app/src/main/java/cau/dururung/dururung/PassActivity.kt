@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.io.File
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*
 
@@ -45,12 +46,13 @@ class PassActivity() : AppCompatActivity() {
             volume = alarmData[3].toInt()
 
 
-
-
-            cal.set(Calendar.HOUR, hour)
+            cal.set(Calendar.HOUR_OF_DAY, hour)
             cal.set(Calendar.MINUTE, min)
 
-            Log.d("time",alarmStr)
+            Log.d("time1", SimpleDateFormat().format(cal.time))
+
+
+            Log.d("time2",alarmStr)
 
             timer.schedule(object : TimerTask() {
                 override fun run() {
