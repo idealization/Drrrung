@@ -15,8 +15,8 @@
 3. When customer wants alarm setting, It provides alarm with snooze. Then this will be stored in the sleepDatabase which ML model uses.
 
 ## Development Environment
-> Android Studio @2020.3.1
-> tensorflow
+- Android Studio @2020.3.1
+- tensorflow
 
 ## Drrrung screenshot
 ### Main
