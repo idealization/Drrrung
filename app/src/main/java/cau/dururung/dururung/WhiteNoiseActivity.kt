@@ -38,7 +38,7 @@ class WhiteNoiseActivity : AppCompatActivity() {
                 .setSampleRate(44100)
                 .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
                 .build())
-            .setTransferMode(AudioTrack.MODE_STREAM)
+            .setTransferMode(AudioTrack.MODE_STATIC)
             .setAudioAttributes(AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -53,19 +53,25 @@ class WhiteNoiseActivity : AppCompatActivity() {
             Log.d("WNoise", "$i gain: ${equalizer.getBandLevel(i.toShort())}")
         }
         equalizer.enabled = true
+        audioTrack.setLoopPoints(0, buffer.size, -1);
         audioTrack.play()
 
         equalizerView.numBands = equalizer.numberOfBands.toInt()
         equalizerView.setOnTouchListener { v, event ->
             for (i in 0 until equalizer.numberOfBands){
                 equalizer.setBandLevel(i.toShort(),
-                    (equalizerView.getEQLevel(i)*Short.MAX_VALUE).toInt().toShort()
+                    (equalizerView.getEQLevel(i)*3000 - 1500).toInt().toShort()
                 )
                 Log.d("WNoise", "$i gain: ${equalizer.getBandLevel(i.toShort())}")
             }
             v.performClick()
             return@setOnTouchListener false
         }
+    }
+
+    override fun onStop() {
+        audioTrack.stop()
+        super.onStop()
     }
 }
 

@@ -2,6 +2,7 @@ package cau.dururung.dururung
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
@@ -129,6 +130,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.switchWakeTime.setOnCheckedChangeListener { buttonView, isChecked ->
             binding.btnSelectTime.isEnabled = isChecked
+        }
+
+        binding.makeWhiteSound.setOnClickListener {
+            startActivity(Intent(this, WhiteNoiseActivity::class.java))
         }
 
     }
