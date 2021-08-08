@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         accessDatabase()
         // 임의로 데이터 삽입
         Thread(insertSleep).start()
