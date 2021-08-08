@@ -97,7 +97,7 @@ class PassActivity() : AppCompatActivity() {
                             min -= 60
                         }
 
-                        cal.set(Calendar.HOUR, hour)
+                        cal.set(Calendar.HOUR_OF_DAY, hour)
                         cal.set(Calendar.MINUTE, min)
 
                         timer.cancel()
