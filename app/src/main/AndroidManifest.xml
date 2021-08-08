@@ -14,11 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Dururung">
-        <activity android:name=".AlarmActivity"
-            android:exported="true"/>
+        <activity
+            android:name=".MLActivity"
+            android:exported="true" />
+        <activity android:name=".PassActivity" />
+        <activity
+            android:name=".AlarmActivity"
+            android:exported="true" />
         <activity
             android:name=".MorningcallActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
