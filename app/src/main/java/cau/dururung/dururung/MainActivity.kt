@@ -115,6 +115,11 @@ class MainActivity : AppCompatActivity() {
             invalidate()
         }
 
+        binding.whiteNoiseActivity.setOnClickListener {
+            val nextIntent = Intent(this, WhiteNoiseActivity::class.java)
+            startActivity(nextIntent)
+        }
+
         binding.btnSelectTime.setOnClickListener {
             val cal = Calendar.getInstance()
 
@@ -132,8 +137,9 @@ class MainActivity : AppCompatActivity() {
             binding.btnSelectTime.isEnabled = isChecked
         }
 
-        binding.makeWhiteSound.setOnClickListener {
-            startActivity(Intent(this, WhiteNoiseActivity::class.java))
+        binding.morningCallActivity.setOnClickListener {
+            val nextIntent = Intent(this, MorningcallActivity::class.java)
+            startActivity(nextIntent)
         }
 
     }

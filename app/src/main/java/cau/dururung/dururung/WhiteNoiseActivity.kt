@@ -1,5 +1,6 @@
 package cau.dururung.dururung
 
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioTrack
@@ -66,6 +67,16 @@ class WhiteNoiseActivity : AppCompatActivity() {
             }
             v.performClick()
             return@setOnTouchListener false
+        }
+
+        binding.okBtn.setOnClickListener {
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
+        }
+
+        binding.cancleBtn.setOnClickListener {
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
         }
     }
 

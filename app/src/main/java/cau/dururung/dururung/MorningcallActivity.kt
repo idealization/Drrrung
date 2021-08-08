@@ -4,6 +4,7 @@ import android.app.TimePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -88,10 +89,13 @@ class MorningcallActivity : AppCompatActivity() {
 
         binding.okBtn.setOnClickListener {
             appSpecificExternalDir.writeText("$hour $min $selectedSoundName $volume")
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
         }
 
         binding.cancleBtn.setOnClickListener {
-
+            val nextIntent = Intent(this, MainActivity::class.java)
+            startActivity(nextIntent)
         }
     }
 
