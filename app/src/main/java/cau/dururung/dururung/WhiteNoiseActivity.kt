@@ -7,7 +7,6 @@ import android.media.AudioTrack
 import android.media.audiofx.Equalizer
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityWhiteNoiseBinding
 

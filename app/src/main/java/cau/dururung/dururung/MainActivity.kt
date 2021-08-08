@@ -1,31 +1,24 @@
 package cau.dururung.dururung
 
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TimePicker
-import android.widget.Toast
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Room
+import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityMainBinding
-import cau.dururung.dururung.databinding.ActivityRatingBinding
 import cau.dururung.dururung.db.SleepData
 import cau.dururung.dururung.db.SleepDataDao
 import cau.dururung.dururung.db.SleepDatabase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleDataSet
+import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 
 class MainActivity : AppCompatActivity() {
