@@ -206,49 +206,56 @@ class MainActivity : AppCompatActivity() {
             sleep_date = "2021-07-19",
             start_time = "01-21",
             wakeUp_date = "2021-07-19",
-            end_time = "09-30"
+            end_time = "09-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-20",
             start_time = "00-21",
             wakeUp_date = "2021-07-20",
-            end_time = "09-00"
+            end_time = "09-00",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-20",
             start_time = "23-21",
             wakeUp_date = "2021-07-21",
-            end_time = "08-30"
+            end_time = "08-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-22",
             start_time = "01-21",
             wakeUp_date = "2021-07-22",
-            end_time = "09-30"
+            end_time = "09-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-23",
             start_time = "01-21",
             wakeUp_date = "2021-07-23",
-            end_time = "09-30"
+            end_time = "09-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-24",
             start_time = "01-21",
             wakeUp_date = "2021-07-24",
-            end_time = "09-30"
+            end_time = "09-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
         entity = SleepData(
             sleep_date = "2021-07-25",
             start_time = "01-21",
             wakeUp_date = "2021-07-25",
-            end_time = "09-30"
+            end_time = "09-30",
+            rating = 3.0f
         )
         sleepDao.insert(entity)
     }
