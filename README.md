@@ -8,10 +8,11 @@
 
 ## Introduction
 ### Drrrung is a android app for sleeping pattern
-> It makes people have the best amount of sleep time for an individual.
->> ML model recommends tomorrow(today) Wake-up time
-> Customers can customize their White Noise.
-> When customer wants alarm setting, It provides alarm with snooze. Then this will be stored in the sleepDatabase.
+1. It makes people have the best amount of sleep time for an individual.
+  <br> => ML model recommends tomorrow(today) Wake-up time.
+2. It provides an environment that makes people fall asleep more easily and comfortable.
+  <br> => Customers can customize their White Noise. And Customer can play thier white noise easily.
+3. When customer wants alarm setting, It provides alarm with snooze. Then this will be stored in the sleepDatabase which ML model uses.
 
 ## Development Environment
 > Android Studio @2020.3.1
