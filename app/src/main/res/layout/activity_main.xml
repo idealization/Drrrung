@@ -45,7 +45,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/make_white_sound"
+                android:id="@+id/whiteNoiseActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="나만의 백색소음 만들기" />
@@ -101,7 +101,7 @@
                 app:srcCompat="@drawable/alarm" />
 
             <Button
-                android:id="@+id/btnSetMorningCall"
+                android:id="@+id/morningCallActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
