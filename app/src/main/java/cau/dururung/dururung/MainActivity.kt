@@ -2,6 +2,7 @@ package cau.dururung.dururung
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
@@ -114,6 +115,11 @@ class MainActivity : AppCompatActivity() {
             invalidate()
         }
 
+        binding.whiteNoiseActivity.setOnClickListener {
+            val nextIntent = Intent(this, WhiteNoiseActivity::class.java)
+            startActivity(nextIntent)
+        }
+
         binding.btnSelectTime.setOnClickListener {
             val cal = Calendar.getInstance()
 
@@ -129,6 +135,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.switchWakeTime.setOnCheckedChangeListener { buttonView, isChecked ->
             binding.btnSelectTime.isEnabled = isChecked
+        }
+
+        binding.morningCallActivity.setOnClickListener {
+            val nextIntent = Intent(this, MorningcallActivity::class.java)
+            startActivity(nextIntent)
         }
 
     }
