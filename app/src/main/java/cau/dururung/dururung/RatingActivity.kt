@@ -1,10 +1,9 @@
 package cau.dururung.dururung
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import cau.dururung.dururung.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityRatingBinding
 import cau.dururung.dururung.db.SleepData
 import cau.dururung.dururung.db.SleepDataDao

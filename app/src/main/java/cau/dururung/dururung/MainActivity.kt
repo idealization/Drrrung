@@ -1,38 +1,39 @@
 package cau.dururung.dururung
 
 import android.app.TimePickerDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Paint
-import androidx.appcompat.app.AppCompatActivity
+import android.media.AudioAttributes
+import android.media.AudioFormat
+import android.media.AudioTrack
+import android.media.audiofx.Equalizer
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TimePicker
-import android.widget.Toast
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import androidx.room.Room
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityMainBinding
-import cau.dururung.dururung.databinding.ActivityRatingBinding
 import cau.dururung.dururung.db.SleepData
 import cau.dururung.dururung.db.SleepDataDao
 import cau.dururung.dururung.db.SleepDatabase
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.CandleData
+import com.github.mikephil.charting.data.CandleDataSet
+import com.github.mikephil.charting.data.CandleEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var sleepDao: SleepDataDao
     private lateinit var labels: Array<String>
+    lateinit var audioTrack: AudioTrack
+    lateinit var equalizer: Equalizer
 
+    var ison = false
     var hour: Int = 0
     var min: Int = 0
 
@@ -142,6 +143,56 @@ class MainActivity : AppCompatActivity() {
             startActivity(nextIntent)
         }
 
+        binding.playWhiteSound.setOnClickListener {
+            if (ison) {
+                audioTrack.stop()
+                ison = false
+                return@setOnClickListener
+            }
+
+            val duration = 10 // duration of sound
+            val sampleRate = 44100 // Hz (maximum frequency is 7902.13Hz (B8))
+            val numSamples = duration * sampleRate
+            val samples = DoubleArray(numSamples)
+            val buffer = ShortArray(numSamples)
+            for (i in 0 until numSamples) {
+                buffer[i] = (Short.MIN_VALUE..Short.MAX_VALUE).random().toShort()
+            }
+
+            audioTrack = AudioTrack.Builder()
+                .setAudioFormat(
+                    AudioFormat.Builder()
+                    .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                    .setSampleRate(44100)
+                    .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                    .build())
+                .setTransferMode(AudioTrack.MODE_STATIC)
+                .setAudioAttributes(
+                    AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_MEDIA)
+                    .build())
+                .setBufferSizeInBytes(buffer.size * 2)
+                .build()
+
+            audioTrack.write(buffer, 0, buffer.size)
+            equalizer = Equalizer(0, audioTrack.audioSessionId)
+
+            val file_wn = File(applicationContext.getExternalFilesDir(null), "white_noise")
+            if (!file_wn.exists()) return@setOnClickListener
+            val textFormat = file_wn.readText()
+            val setlist = textFormat.split(" ")
+
+            for (i in 0 until equalizer.numberOfBands){
+//            Log.d("WNoise", "${equalizer.getBandFreqRange(i.toShort())[1]}")
+                Log.d("WNoise", "$i gain: ${equalizer.getBandLevel(i.toShort())}")
+                equalizer.setBandLevel(i.toShort(), (setlist[i].toFloat() * 3000 - 1500).toInt().toShort())
+            }
+            equalizer.enabled = true
+            audioTrack.setLoopPoints(0, buffer.size, -1);
+            audioTrack.play()
+            ison = true
+        }
     }
 
     private fun accessDatabase() {
