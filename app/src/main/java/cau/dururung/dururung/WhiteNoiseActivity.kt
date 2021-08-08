@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import cau.dururung.dururung.databinding.ActivityWhiteNoiseBinding
+import java.io.File
 
 
 class WhiteNoiseActivity : AppCompatActivity() {
@@ -60,7 +61,7 @@ class WhiteNoiseActivity : AppCompatActivity() {
         equalizerView.setOnTouchListener { v, event ->
             for (i in 0 until equalizer.numberOfBands){
                 equalizer.setBandLevel(i.toShort(),
-                    (equalizerView.getEQLevel(i)*3000 - 1500).toInt().toShort()
+                    (equalizerView.getEQLevel(i) * 3000 - 1500).toInt().toShort()
                 )
                 Log.d("WNoise", "$i gain: ${equalizer.getBandLevel(i.toShort())}")
             }
@@ -69,13 +70,18 @@ class WhiteNoiseActivity : AppCompatActivity() {
         }
 
         binding.okBtn.setOnClickListener {
-            val nextIntent = Intent(this, MainActivity::class.java)
-            startActivity(nextIntent)
+            val wnFile = File(applicationContext.getExternalFilesDir(null), "white_noise")
+            var formatstring = ""
+            for (i in 0 until equalizerView.numBands){
+                formatstring += equalizerView.getEQLevel(i)
+                formatstring += " "
+            }
+            wnFile.writeText(formatstring)
+            finish()
         }
 
         binding.cancleBtn.setOnClickListener {
-            val nextIntent = Intent(this, MainActivity::class.java)
-            startActivity(nextIntent)
+            finish()
         }
     }
 
